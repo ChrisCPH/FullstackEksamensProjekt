@@ -1,0 +1,82 @@
+{
+  "game": [
+    {
+      "id": 1,
+      "name": "Counter-Strike: Global Offensive",
+      "price": 5,
+      "developer": "Valve",
+      "publisher": "Valve",
+      "release_date": "21-08-2012",
+      "platform": [
+        "windows, ",
+        "linux, ",
+        "macos"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Dota 2",
+      "price": 0,
+      "developer": "Valve",
+      "publisher": "Valve",
+      "release_date": "09-07-2013",
+      "platform": [
+        "windows, ",
+        "linux, ",
+        "macos"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Apex Legends",
+      "price": 0,
+      "developer": "Respawn Entertainment",
+      "publisher": "Electronic Arts",
+      "release_date": "05-11-2020",
+      "platform": [
+        "windows, ",
+        "linux, ",
+        "macos"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "PUBG: BATTLEGROUNDS",
+      "price": 14.99,
+      "developer": "KRAFTON, Inc.",
+      "publisher": "KRAFTON, Inc.",
+      "release_date": "21-12-2017",
+      "platform": [
+        "windows, ",
+        "linux, ",
+        "macos"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Destiny 2",
+      "price": 10,
+      "developer": "Bungie",
+      "publisher": "Bungie",
+      "release_date": "01-10-2019",
+      "platform": [
+        "windows, ",
+        "linux, ",
+        "macos"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Sons Of The Forest",
+      "price": 28.99,
+      "developer": "Endnight Games Ltd",
+      "publisher": "Newnight",
+      "release_date": "23-03-2023",
+      "platform": [
+        "windows, ",
+        "linux, ",
+        "macos"
+      ]
+    }
+  ]
+}
