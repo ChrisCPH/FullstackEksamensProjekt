@@ -4,6 +4,9 @@ import express = require("express");
 import morgan = require('morgan');
 import logger from "./utility/logger";
 
+// Routes
+import gameRoute from "./routes/gameroute";
+
 // Create Express server
 const app = express();
 if (process.env.NODE_ENV === 'development') {
@@ -35,7 +38,12 @@ app.post("/", (req, res) => {
         })
 })
 
-const port = process.env.PORT;
+app.use("/api/games", gameRoute);
+
+const port = process.env.PORT + 1;
+
 app.listen(port, () => {
-  console.log(`App running on port ${port}`);
+  console.log(`App running on port http://localhost:${port}`);
 });
+
+export default app
