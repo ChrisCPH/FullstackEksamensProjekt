@@ -1,4 +1,7 @@
-const types = `#graphql
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
   type Game {
@@ -14,13 +17,15 @@ const types = `#graphql
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    games: [Game]
+    games: [Game!]!
+    game(id: ID): Game
   }
 
   type Mutation {
     # Game
-    addGame(input:GameInput) : Game
-    deleteGame(id:ID!) : Game
+    createGame(title : String!, price : Int, releaseData : String!, developer : String!, publisher : String!) : Game
+    deleteGame(id: ID!) : Boolean
+    updateGame(id : ID!,  title : String!, price : Int, releaseData : String!, developer : String!, publisher : String!) : Game
   }
 
 
@@ -33,4 +38,4 @@ const types = `#graphql
   }
 `;
 
-export default types
+export default typeDefs;
