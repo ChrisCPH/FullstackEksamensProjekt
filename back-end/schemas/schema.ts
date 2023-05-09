@@ -7,7 +7,7 @@ const typeDefs = `#graphql
   type Game {
     id: ID!
     title: String
-    releaseData: String
+    releaseDate: String
     price: Int
     developer: String
     publisher: String

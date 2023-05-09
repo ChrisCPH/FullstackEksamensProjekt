@@ -24,9 +24,8 @@ const graphqlServer = new ApolloServer({
 export function startServer() {
   startStandaloneServer(graphqlServer, {
     listen: { port: 4000 },
-  }).then(url => {
-    console.log(`Apollo server is running *:${url}`);
-  });
+  })
+    console.log(`Graphql is running at http://localhost:4000/graphql`);
 }
 
 export default graphqlServer
