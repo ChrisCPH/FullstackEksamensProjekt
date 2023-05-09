@@ -9,6 +9,16 @@ const GameSchema = new mongoose.Schema({
     price: Number,
     developer: String,
     publisher: String,
+    ratings: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Rating'
+    }],
+    rating_average: Number,
+    soldGames: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'UserOwnedGames'
+    }],
+    soldGamesCount: Number
   });
 
 const Game = mongoose.model('Game', GameSchema, 'Games');

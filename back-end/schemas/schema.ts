@@ -2,8 +2,6 @@
 // that together define the "shape" of queries that are executed against
 // your data.
 const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
   type Game {
     id: ID!
     title: String
@@ -11,23 +9,64 @@ const typeDefs = `#graphql
     price: Int
     developer: String
     publisher: String
+    ratings: [Rating!]!
+    ratingAverage: Float
+    soldGames: [UserOwnedGames!]!
+    soldGamesCount: Int
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  type Rating {
+    id: ID!
+    rating: Int!
+    comment: String
+    game: Game!
+    user: User!
+  }
+
+  type User {
+    id: ID!
+    username: String!
+    password: String!
+    ratings: [Rating!]!
+    gamesOwned: [UserOwnedGames!]!
+    gamesOwnedCount: Int
+  }
+
+  type UserOwnedGame {
+    id: ID!
+    game: Game!
+    user: User!
+  }
+
   type Query {
     games: [Game!]!
     game(id: ID): Game
+    ratings: [Rating!]!
+    rating(id: ID): Rating
+    users: [User!]!
+    user(id: ID): User
+    userOwnedGames: [UserOwnedGame!]!
+    userOwnedGame(id: ID): UserOwnedGame
   }
 
   type Mutation {
     # Game
-    createGame(title : String!, price : Int, releaseData : String!, developer : String!, publisher : String!) : Game
+    createGame(input: GameInput!): Game
     deleteGame(id: ID!) : Boolean
-    updateGame(id : ID!,  title : String!, price : Int, releaseData : String!, developer : String!, publisher : String!) : Game
+    updateGame(id: ID!, input: GameInput!): Game
+    # Rating
+    createRating(RatingInput!): Rating
+    deleteRating(id: ID!): Boolean
+    updateRating(id: ID!, input: RatingInput!): Rating
+    # User
+    createUser(UserInput!): User
+    deleteUser(id: ID!): Boolean
+    updateUser(id: ID!, input: UserInput!): User
+    # UserOwnedGame
+    createUserOwnedGame(UserOwnedGameInput!): UserOwnedGame
+    deleteUserOwnedGame(id: ID!): Boolean
+    updateUserOwnedGame(id: ID!, input: UserOwnedGameInput!): UserOwnedGame
   }
-
 
   input GameInput {
     title: String
@@ -35,6 +74,23 @@ const typeDefs = `#graphql
     price: Int
     developer: String
     publisher: String
+  }
+
+  input RatingInput {
+    rating: Int!
+    comment: String
+    game: Game!
+    user: User!
+  }
+
+  input UserInput {
+    username: String!
+    password: String!
+  }
+
+  input UserOwnedGameInput {
+    game: Game!
+    user: User!
   }
 `;
 

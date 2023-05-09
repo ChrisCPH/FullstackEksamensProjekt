@@ -4,6 +4,9 @@ type UserType = {
     id:Types.ObjectId;
     username:string;
     password:string;
+    ratingId:[Types.ObjectId];
+    gamesOwned:[Types.ObjectId];
+    gamesOwnedCount:number;
 };
 
 type RatingType = {
@@ -21,6 +24,10 @@ type GameType = {
     price:number;
     developer:string;
     publisher:string;
+    ratings:[Types.ObjectId];
+    ratingAverage:number;
+    soldGames:[Types.ObjectId];
+    soldGamesCount:number;
 };
 
 type UserOwnedGameType = {

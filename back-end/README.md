@@ -1,5 +1,6 @@
 # Fullstack Backend Start-code
 
+- npm run start:nodemon
 
 ## Technologies used
 
