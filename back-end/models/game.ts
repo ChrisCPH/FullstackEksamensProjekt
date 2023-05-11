@@ -16,7 +16,7 @@ const GameSchema = new mongoose.Schema({
     rating_average: Number,
     soldGames: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserOwnedGames'
+      ref: 'UserOwnedGame'
     }],
     soldGamesCount: Number
   });

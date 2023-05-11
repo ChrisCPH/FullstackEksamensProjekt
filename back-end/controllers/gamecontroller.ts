@@ -59,11 +59,11 @@ export const createGame = async(req : express.Request, res: express.Response) =>
     const jsonData = req.body;
     console.log()
 
-    const newCar = await Game.create(req.body);
+    const newGame = await Game.create(req.body);
 
     res.status(201)
         .json({
             status: "success",
-            data: newCar
+            data: newGame
         })
 }

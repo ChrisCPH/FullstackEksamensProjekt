@@ -11,7 +11,7 @@ const typeDefs = `#graphql
     publisher: String
     ratings: [Rating!]!
     ratingAverage: Float
-    soldGames: [UserOwnedGames!]!
+    soldGames: [UserOwnedGame!]!
     soldGamesCount: Int
   }
 
@@ -28,7 +28,7 @@ const typeDefs = `#graphql
     username: String!
     password: String!
     ratings: [Rating!]!
-    gamesOwned: [UserOwnedGames!]!
+    gamesOwned: [UserOwnedGame!]!
     gamesOwnedCount: Int
   }
 
@@ -55,15 +55,15 @@ const typeDefs = `#graphql
     deleteGame(id: ID!) : Boolean
     updateGame(id: ID!, input: GameInput!): Game
     # Rating
-    createRating(RatingInput!): Rating
+    createRating(input: RatingInput!): Rating
     deleteRating(id: ID!): Boolean
     updateRating(id: ID!, input: RatingInput!): Rating
     # User
-    createUser(UserInput!): User
+    createUser(input: UserInput!): User
     deleteUser(id: ID!): Boolean
     updateUser(id: ID!, input: UserInput!): User
     # UserOwnedGame
-    createUserOwnedGame(UserOwnedGameInput!): UserOwnedGame
+    createUserOwnedGame(input: UserOwnedGameInput!): UserOwnedGame
     deleteUserOwnedGame(id: ID!): Boolean
     updateUserOwnedGame(id: ID!, input: UserOwnedGameInput!): UserOwnedGame
   }
@@ -79,8 +79,8 @@ const typeDefs = `#graphql
   input RatingInput {
     rating: Int!
     comment: String
-    game: Game!
-    user: User!
+    gameId: ID!
+    userId: ID!
   }
 
   input UserInput {
@@ -89,8 +89,8 @@ const typeDefs = `#graphql
   }
 
   input UserOwnedGameInput {
-    game: Game!
-    user: User!
+    gameId: ID!
+    userId: ID!
   }
 `;
 
