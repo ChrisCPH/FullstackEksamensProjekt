@@ -72,7 +72,7 @@ export const deleteUser = async (req : express.Request, res : express.Response) 
 
 export const updateUser = async (req : express.Request, res : express.Response) => {
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
         res.status(200)
             .json({
                 data: updatedUser

@@ -71,7 +71,7 @@ export const deleteRating = async (req : express.Request, res : express.Response
 
 export const updateRating = async (req : express.Request, res : express.Response) => {
     try {
-        const updatedRating = await Rating.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        const updatedRating = await Rating.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
         res.status(200)
             .json({
                 data: updatedRating

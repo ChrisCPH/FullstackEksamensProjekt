@@ -13,7 +13,7 @@ export default {
       return result ? true : false;
     },
     updateGame: async (_parent:never, { id, input }:Args) => {
-      const result = await Game.findByIdAndUpdate(id, {input});
+      const result = await Game.findByIdAndUpdate(id, input);
       return result;
     },
     createRating: async (_parent:RatingType, {input}:Args) => {
@@ -24,7 +24,7 @@ export default {
       return result ? true : false;
     },
     updateRating: async (_parent:never, { id, input }:Args) => {
-      const result = await Rating.findByIdAndUpdate(id, {input});
+      const result = await Rating.findByIdAndUpdate(id, input);
       return result;
     },
     createUser: async (_parent:UserType, {input}:Args) => {
@@ -35,7 +35,7 @@ export default {
       return result ? true : false;
     },
     updateUser: async (_parent:never, { id, input }:Args) => {
-      const result = await User.findByIdAndUpdate(id, {input});
+      const result = await User.findByIdAndUpdate(id, input);
       return result;
     },
     createUserOwnedGame: async (_parent:UserOwnedGameType, {input}:Args) => {
@@ -46,7 +46,7 @@ export default {
       return result ? true : false;
     },
     updateUserOwnedGame: async (_parent:never, { id, input }:Args) => {
-      const result = await UserOwnedGame.findByIdAndUpdate(id, {input});
+      const result = await UserOwnedGame.findByIdAndUpdate(id, input);
       return result;
     },
 };

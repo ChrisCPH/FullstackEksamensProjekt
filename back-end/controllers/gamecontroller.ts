@@ -82,8 +82,8 @@ export const deleteGame = async (req : express.Request, res : express.Response) 
 
 export const updateGame = async (req : express.Request, res : express.Response) => {
     try {
-        const updatedGame = await Game.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        res.status(200)
+        const updatedGame = await Game.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        res.status(204)
             .json({
                 data: updatedGame
             });

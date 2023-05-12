@@ -72,7 +72,7 @@ export const deleteUserOwnedGame = async (req : express.Request, res : express.R
 
 export const updateUserOwnedGame = async (req : express.Request, res : express.Response) => {
     try {
-        const updatedUserOwnedGame = await UserOwnedGame.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        const updatedUserOwnedGame = await UserOwnedGame.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
         res.status(200)
             .json({
                 data: updatedUserOwnedGame
