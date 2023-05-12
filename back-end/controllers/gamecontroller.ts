@@ -22,8 +22,7 @@ export const getGame = async(req: express.Request, res : express.Response) => {
                 results: game.length
             }
         )
-    }
-    catch(e) {
+    } catch(e) {
         res.status(500).json(
             {
                 status: "error",
@@ -43,8 +42,7 @@ export const getAllGames = async(req: express.Request, res : express.Response) =
                 results: data.length
             }
         )
-    }
-    catch(e) {
+    } catch(e) {
         res.status(500).json(
             {
                 status: "error",
@@ -55,15 +53,46 @@ export const getAllGames = async(req: express.Request, res : express.Response) =
 }
 
 export const createGame = async(req : express.Request, res: express.Response) => {
+    try {
+        const newGame = await Game.create(req.body);
+    
+        res.status(201)
+            .json({
+                data: newGame
+            });
+    } catch(e) {
+        res.status(400)
+            .json(
+                {
+                status: "error",
+                message: e
+            });
+    }
 
-    const jsonData = req.body;
-    console.log()
+}
 
-    const newGame = await Game.create(req.body);
+export const deleteGame = async (req : express.Request, res : express.Response) => {
+    try {
+        await Game.findByIdAndDelete(req.params.id);
+        res.status(204).json();
+    } catch (e) {
+        res.status(204).json;
+    }
+}
 
-    res.status(201)
-        .json({
-            status: "success",
-            data: newGame
-        })
+export const updateGame = async (req : express.Request, res : express.Response) => {
+    try {
+        const updatedGame = await Game.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        res.status(200)
+            .json({
+                data: updatedGame
+            });
+    } catch (e) {
+        res.status(404)
+            .json(
+                {
+                status: "error",
+                message: e
+            });
+    }
 }

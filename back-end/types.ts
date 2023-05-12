@@ -20,7 +20,7 @@ type RatingType = {
 type GameType = {
     id:Types.ObjectId;
     title:string;
-    releaseData:string;
+    releaseDate:string;
     price:number;
     developer:string;
     publisher:string;
@@ -45,7 +45,7 @@ type Context = {
 
 type Args = {
     id:string;
-    input:UserType | GameType;
+    input:UserType | GameType | RatingType | UserOwnedGameType;
 }
 
 export type {UserType, RatingType, GameType, UserOwnedGameType, Context, Args};

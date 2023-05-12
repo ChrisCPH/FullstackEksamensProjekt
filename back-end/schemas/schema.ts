@@ -4,7 +4,7 @@
 const typeDefs = `#graphql
   type Game {
     id: ID!
-    title: String
+    title: String!
     releaseDate: String
     price: Int
     developer: String
@@ -69,8 +69,8 @@ const typeDefs = `#graphql
   }
 
   input GameInput {
-    title: String
-    releaseData: String
+    title: String!
+    releaseDate: String
     price: Int
     developer: String
     publisher: String

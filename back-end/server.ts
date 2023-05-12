@@ -5,6 +5,11 @@ import morgan = require('morgan');
 dotenv.config({path:'./config.env'});
 import { startServer } from "./graphql";
 
+import gameRoute from "./routes/gameRoute";
+import ratingRoute from "./routes/ratingRoute"
+import userRoute from "./routes/userRoute"
+import userOwnedGameRoute from "./routes/userOwnedGameRoute"
+
 const DB = process.env.DATABASE_DEV!.replace(
   '<password>',
   process.env.DATABASE_PASSWORD!,
@@ -12,9 +17,6 @@ const DB = process.env.DATABASE_DEV!.replace(
 
 mongoose.connect(DB, {
 }).then(() => console.log('Connected to the database successfully!'));
-
-// Routes
-import gameRoute from "./routes/gameRoute";
 
 // Create Express server
 const app = express();
@@ -48,10 +50,13 @@ app.post("/", (req, res) => {
 })
 
 app.use("/api/games", gameRoute);
+app.use("/api/ratings", ratingRoute);
+app.use("/api/users", userRoute)
+app.use("/api/userOwnedGames", userOwnedGameRoute)
 
 const port = process.env.PORT;
 app.listen(port, () => {
-  console.log(`Database server running on http://localhost:${port}/api/games`);
+  console.log(`Database server running on http://localhost:${port}/api`);
 });
 
 // Start the Apollo/Graphql server
