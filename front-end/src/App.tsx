@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
 import './css/App.css'
-import Games from './classes/Games';
+import Game from './classes/Game';
 import AddGameForm from './components/AddGameForm';
 import GameTable from './components/GameTable'
 
 function App() {
   
-  const [games, setGames] = useState<Games[]>([]);
+  const [games, setGames] = useState<Game[]>([]);
 
   const fetchGames = () => {
-      return fetch('http://localhost:3001/game')
+      return fetch('http://localhost:5000/api/games')
           .then(((res) => res.json()))
-          .then((data) => setGames(data))
+          .then((data) => setGames(JSON.parse(JSON.stringify(data.games))))
   }
 
   useEffect(() => {

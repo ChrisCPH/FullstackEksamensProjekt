@@ -1,4 +1,4 @@
-import Game from "../classes/Games";
+import Game from "../classes/Game";
 
 const makeOptions = (method:string, body?:Game) => {
     var opts = {

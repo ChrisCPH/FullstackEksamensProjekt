@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 import mongoose from "mongoose"
 import express = require("express");
 import morgan = require('morgan');
-dotenv.config({path:'./config.env'});
+const cors=require("cors");
 import { startServer } from "./graphql";
 
 import gameRoute from "./routes/gameRoute";
@@ -10,6 +10,7 @@ import ratingRoute from "./routes/ratingRoute"
 import userRoute from "./routes/userRoute"
 import userOwnedGameRoute from "./routes/userOwnedGameRoute"
 
+dotenv.config({path:'./config.env'});
 const DB = process.env.DATABASE_DEV!.replace(
   '<password>',
   process.env.DATABASE_PASSWORD!,
@@ -25,6 +26,14 @@ if (process.env.NODE_ENV === 'development') {
   console.log("Development mode...");
 }
 
+// Reference: https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe.
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions));
 app.use(express.json()); // Body parser for JSON data
 app.use(express.static(`${__dirname}/public`)); // Serve static files
 
