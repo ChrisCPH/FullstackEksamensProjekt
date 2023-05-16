@@ -1,11 +1,13 @@
 class User {
-    id:number
+    id?:number
     username:string
+    password:string
     type:string
 
-    constructor(id:number, username:string, type:string) {
-        this.id = id;
+    constructor(username:string, password:string, type:string) {
+        //this.id = id;
         this.username = username;
+        this.password = password;
         this.type = type;
     }
 }

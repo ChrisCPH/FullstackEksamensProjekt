@@ -3,6 +3,8 @@ import './css/App.css'
 import Game from './classes/Game';
 import AddGameForm from './components/AddGameForm';
 import GameTable from './components/GameTable'
+import UserContextProvider from './contexts/UserContext';
+import Login from './components/Login';
 
 function App() {
   
@@ -16,13 +18,19 @@ function App() {
 
   useEffect(() => {
       fetchGames();
+
   },[])
 
   return (
     <div className="container-fluid">
       <div className="row">
-        <GameTable games={games} setGames={setGames} />
-        <AddGameForm games={games} setGames={setGames} />
+        {/* <GameTable games={games} setGames={setGames} />
+        <AddGameForm games={games} setGames={setGames} /> */}
+        <UserContextProvider>
+      <div>
+        <Login></Login>
+      </div>
+    </UserContextProvider>
       </div>
     </div>
   )
