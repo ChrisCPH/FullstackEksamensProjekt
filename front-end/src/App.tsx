@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react'
 import './css/App.css'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import Games from './classes/Games';
 import AddGameForm from './components/AddGameForm';
 import GameTable from './components/GameTable'
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache(),
+});
 
 function App() {
   
   const [games, setGames] = useState<Games[]>([]);
 
   const fetchGames = () => {
-      return fetch('http://localhost:3001/game')
+      return fetch('http://localhost:5000/api/games')
           .then(((res) => res.json()))
-          .then((data) => setGames(data))
+          .then((data) => setGames(JSON.parse(JSON.stringify(data.games))))
   }
 
   useEffect(() => {
@@ -19,12 +25,16 @@ function App() {
   },[])
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <GameTable games={games} setGames={setGames} />
-        <AddGameForm games={games} setGames={setGames} />
-      </div>
-    </div>
+    <>
+      <ApolloProvider client={client}>
+        <div className="container-fluid">
+          <div className="row">
+            <GameTable games={games} setGames={setGames} />
+            <AddGameForm games={games} setGames={setGames} />
+          </div>
+        </div>
+      </ApolloProvider>
+    </>    
   )
 }
 
