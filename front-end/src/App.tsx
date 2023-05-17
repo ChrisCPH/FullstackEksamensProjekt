@@ -4,11 +4,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import Game from './classes/Game';
 import AddGameForm from './components/AddGameForm';
 import GameTable from './components/GameTable'
-
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache(),
-});
+import UserContextProvider from './contexts/UserContext';
+import Login from './components/Login';
 
 function App() {
   
@@ -22,19 +19,21 @@ function App() {
 
   useEffect(() => {
       fetchGames();
+
   },[])
 
   return (
-    <>
-      <ApolloProvider client={client}>
-        <div className="container-fluid">
-          <div className="row">
-            <GameTable games={games} setGames={setGames} />
-            <AddGameForm games={games} setGames={setGames} />
-          </div>
-        </div>
-      </ApolloProvider>
-    </>    
+    <div className="container-fluid">
+      <div className="row">
+        {/* <GameTable games={games} setGames={setGames} />
+        <AddGameForm games={games} setGames={setGames} /> */}
+        <UserContextProvider>
+      <div>
+        <Login></Login>
+      </div>
+    </UserContextProvider>
+      </div>
+    </div>
   )
 }
 

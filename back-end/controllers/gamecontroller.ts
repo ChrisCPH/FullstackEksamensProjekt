@@ -1,5 +1,6 @@
 import express = require("express");
 import Game from "../models/game";
+import mongoose from "mongoose";
 
 const gameData = [
     {
@@ -34,7 +35,7 @@ export const getGame = async(req: express.Request, res : express.Response) => {
 
 export const getAllGames = async(req: express.Request, res : express.Response) => {
     try {
-        const games = await Game.find({price: {$gt : 0}});
+        const games = await Game.find({});
 
         res.status(200)
         .json({
@@ -74,7 +75,7 @@ export const createGame = async(req : express.Request, res: express.Response) =>
 
 export const deleteGame = async (req : express.Request, res : express.Response) => {
     try {
-        await Game.findByIdAndDelete(req.params.id);
+        await Game.findByIdAndDelete((mongoose.Types.ObjectId.createFromHexString(req.params.id)));
         res.status(204).json();
     } catch (e) {
         res.status(204).json;
@@ -83,7 +84,7 @@ export const deleteGame = async (req : express.Request, res : express.Response) 
 
 export const updateGame = async (req : express.Request, res : express.Response) => {
     try {
-        const updatedGame = await Game.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const updatedGame = await Game.findByIdAndUpdate((mongoose.Types.ObjectId.createFromHexString(req.params.id)), req.body, { new: true, runValidators: true });
         res.status(204)
             .json({
                 data: updatedGame

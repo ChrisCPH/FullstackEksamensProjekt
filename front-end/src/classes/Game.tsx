@@ -13,6 +13,10 @@ class Game {
         this.publisher = publisher;
         this.releaseDate = releaseDate;
     }
+
+    setId(id: number) {
+        this._id = id;
+    }
 }
 
 export default Game
