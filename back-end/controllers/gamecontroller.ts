@@ -34,12 +34,13 @@ export const getGame = async(req: express.Request, res : express.Response) => {
 
 export const getAllGames = async(req: express.Request, res : express.Response) => {
     try {
-        const data = await Game.find({price: {$gt : 0}});
+        const games = await Game.find({price: {$gt : 0}});
 
         res.status(200)
         .json({
-                data: {data},
-                results: data.length
+                //data: {data},
+                games: games,
+                results: games.length
             }
         )
     } catch(e) {

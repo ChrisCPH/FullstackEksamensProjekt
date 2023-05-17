@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './css/App.css'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import Games from './classes/Games';
+import Game from './classes/Game';
 import AddGameForm from './components/AddGameForm';
 import GameTable from './components/GameTable'
 
@@ -12,7 +12,7 @@ const client = new ApolloClient({
 
 function App() {
   
-  const [games, setGames] = useState<Games[]>([]);
+  const [games, setGames] = useState<Game[]>([]);
 
   const fetchGames = () => {
       return fetch('http://localhost:5000/api/games')

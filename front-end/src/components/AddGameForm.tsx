@@ -1,11 +1,11 @@
 import { useState } from "react"
-import Game from "../classes/Games"
+import Game from "../classes/Game"
 import MakeOptions from "./MakeOptions"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AddGameForm = ({games, setGames}:{games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
 
-    const [input, setInput] = useState({name:"", price: 0, developer:"", publisher:"", release_date:"", platform:""})
+    const [input, setInput] = useState({name:"", price: 0, developer:"", publisher:"", release_date:""})
 
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>):void => {
         setInput({
@@ -16,12 +16,12 @@ const AddGameForm = ({games, setGames}:{games:Game[], setGames:React.Dispatch<Re
 
     const handleClick = (event:React.MouseEvent<HTMLButtonElement>):void => {
         event.preventDefault();
-        const newGame = new Game(games.length + 1, input.name, input.price, input.developer, input.publisher, input.release_date, input.platform.split(" "))
+        const newGame = new Game(input.name, input.price, input.developer, input.publisher, input.release_date)
         const options = MakeOptions("POST", newGame);
-        fetch('http://localhost:3001/game',options);
+        fetch('http://localhost:5000/api/games',options);
         games.push(newGame);
         setGames([...games])
-        setInput({name:"", price: 0, developer:"", publisher:"", release_date:"", platform:""});
+        setInput({name:"Test", price: 0, developer:"", publisher:"", release_date:"12 January 2023"});
     }
 
     return (
@@ -54,10 +54,10 @@ const AddGameForm = ({games, setGames}:{games:Game[], setGames:React.Dispatch<Re
                     <input className="form-control" type="text" placeholder="Release date" onChange={handleChange} value={input.release_date} name="release_date" />
                 </div>
 
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor="price">Platform</label>
                     <input className="form-control" placeholder="Platform" onChange={handleChange} value={input.platform} name="platform" />
-                </div>
+                </div> */}
             </form>
             <button className="btn btn-primary" onClick={handleClick}>
                 Add game

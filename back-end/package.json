@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "SET NODE_ENV=development nodemon --exec ts-node server.ts",
+    "start:dev": "SET NODE_ENV=development && nodemon --exec ts-node server.ts",
     "start:nodemon": "nodemon",
-    "start:prod": "SET NODE_ENV=production nodemon --exec ts-node app.ts",
+    "start:prod": "SET NODE_ENV=production && nodemon --exec ts-node app.ts",
     "build": "rimraf ./build && tsc"
   },
   "keywords": [],
