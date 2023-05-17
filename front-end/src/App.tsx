@@ -17,9 +17,13 @@ function App() {
           .then((data) => setGames(JSON.parse(JSON.stringify(data.games))))
   }
 
+  const client = new ApolloClient({
+    uri: 'http://localhost:4000/graphql',
+    cache: new InMemoryCache(),
+  });
+
   useEffect(() => {
       fetchGames();
-
   },[])
 
   return (

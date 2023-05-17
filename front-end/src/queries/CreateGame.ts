@@ -1,24 +1,14 @@
 import {gql} from '@apollo/client';
 
 const CREATE_GAME = gql`
-    mutation CreateGame($gameInput: GameInput!) {
-        createGame(input: $gameInput) {
+    mutation CreateGame($input: GameInput!) {
+        createGame(input: $input) {
             id
             title
             releaseDate
             price
             developer
             publisher
-            ratings {
-                rating
-                comment
-            }
-            ratingAverage
-            soldGames {
-                game
-                user
-            }
-            soldGamesCount
         }
     }
 `;

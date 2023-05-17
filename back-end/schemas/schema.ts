@@ -1,6 +1,3 @@
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
 const typeDefs = `#graphql
   type Game {
     id: ID!
@@ -9,44 +6,34 @@ const typeDefs = `#graphql
     price: Int
     developer: String
     publisher: String
-    ratings: [Rating!]!
+    ratings: [Rating]
     ratingAverage: Float
-    soldGames: [UserOwnedGame!]!
-    soldGamesCount: Int
+    gameOwners: [User]
   }
 
   type Rating {
     id: ID!
     rating: Int!
     comment: String
-    game: Game!
-    user: User!
+    users: [User]
+    games: [Game]
   }
 
   type User {
     id: ID!
     username: String!
     password: String!
-    ratings: [Rating!]!
-    gamesOwned: [UserOwnedGame!]!
-    gamesOwnedCount: Int
-  }
-
-  type UserOwnedGame {
-    id: ID!
-    game: Game!
-    user: User!
+    ratings: [Rating]
+    gamesOwned: [Game]
   }
 
   type Query {
-    games: [Game!]!
+    games: [Game]
     game(id: ID): Game
-    ratings: [Rating!]!
+    ratings: [Rating]
     rating(id: ID): Rating
-    users: [User!]!
+    users: [User]
     user(id: ID): User
-    userOwnedGames: [UserOwnedGame!]!
-    userOwnedGame(id: ID): UserOwnedGame
   }
 
   type Mutation {
@@ -54,18 +41,18 @@ const typeDefs = `#graphql
     createGame(input: GameInput!): Game
     deleteGame(id: ID!) : Boolean
     updateGame(id: ID!, input: GameInput!): Game
+    addGameToUser(input: UserGameInput!): User
     # Rating
     createRating(input: RatingInput!): Rating
     deleteRating(id: ID!): Boolean
     updateRating(id: ID!, input: RatingInput!): Rating
+    addRatingToGame(input: RatingGameInput!): Game
+    addRatingToUser(input: RatingUserInput!): User
     # User
     createUser(input: UserInput!): User
     deleteUser(id: ID!): Boolean
     updateUser(id: ID!, input: UserInput!): User
-    # UserOwnedGame
-    createUserOwnedGame(input: UserOwnedGameInput!): UserOwnedGame
-    deleteUserOwnedGame(id: ID!): Boolean
-    updateUserOwnedGame(id: ID!, input: UserOwnedGameInput!): UserOwnedGame
+    
   }
 
   input GameInput {
@@ -79,8 +66,6 @@ const typeDefs = `#graphql
   input RatingInput {
     rating: Int!
     comment: String
-    gameId: ID!
-    userId: ID!
   }
 
   input UserInput {
@@ -88,8 +73,18 @@ const typeDefs = `#graphql
     password: String!
   }
 
-  input UserOwnedGameInput {
+  input UserGameInput {
     gameId: ID!
+    userId: ID!
+  }
+
+  input RatingGameInput {
+    ratingId: ID!
+    gameId: ID!
+  }
+
+  input RatingUserInput {
+    ratingId: ID!
     userId: ID!
   }
 `;

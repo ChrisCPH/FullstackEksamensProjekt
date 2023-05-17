@@ -1,15 +1,17 @@
 import {gql} from '@apollo/client';
 
 const CREATE_RATING = gql`
-    mutation CreateRating($ratingInput: RatingInput!) {
-        createRating(input: $ratingInput) {
+    mutation CreateRating($input: RatingInput!){
+        createRating(input: $input) {
             id
             rating
             comment
             game {
+                id
                 title
             }
             user {
+                id
                 username
             }
         }

@@ -8,7 +8,6 @@ import { startServer } from "./graphql";
 import gameRoute from "./routes/gameRoute";
 import ratingRoute from "./routes/ratingRoute"
 import userRoute from "./routes/userRoute"
-import userOwnedGameRoute from "./routes/userOwnedGameRoute"
 
 dotenv.config({path:'./config.env'});
 const DB = process.env.DATABASE_DEV!.replace(
@@ -61,7 +60,6 @@ app.post("/", (req, res) => {
 app.use("/api/games", gameRoute);
 app.use("/api/ratings", ratingRoute);
 app.use("/api/users", userRoute)
-app.use("/api/userOwnedGames", userOwnedGameRoute)
 
 const port = process.env.PORT;
 app.listen(port, () => {

@@ -9,15 +9,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ratings: [{
-      type: mongoose.Schema.Types.ObjectId,
+    ratings: {
+      type: [mongoose.Schema.Types.ObjectId],
       ref: 'Rating'
-    }],
-    gamesOwned: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserOwnedGames'
-    }],
-    gamesOwnedCount: Number
+    },
+    gamesOwned: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Game'
+    },
   });
 
 const User = mongoose.model('User', UserSchema, 'Users');

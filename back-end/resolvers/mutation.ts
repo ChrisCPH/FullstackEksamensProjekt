@@ -1,8 +1,7 @@
 import Game from "../models/game"
 import Rating from "../models/rating";
 import User from "../models/user";
-import UserOwnedGame from "../models/userOwnedGame";
-import { GameType, RatingType, UserOwnedGameType, UserType, Context, Args } from '../types';
+import { GameType, RatingType, UserType, Context, Args } from '../types';
 
 export default {
     createGame: async (_parent:GameType, {input}:Args) => {
@@ -18,6 +17,42 @@ export default {
     },
     createRating: async (_parent:RatingType, {input}:Args) => {
       return await Rating.create(input);
+    },
+    addRatingToGame: async (_parent:never, {input}:any) => {
+      const game = await Game.findById(input.gameId);
+      const rating = await Rating.findById(input.ratingId);
+
+      if (!game!.ratings.includes(input.ratingId)) {
+        game!.ratings.push(input.ratingId);
+        await game!.save();
+      }
+
+      if (!rating!.games.includes(input.gameId)) {
+        rating!.games.push(input.gameId);
+        await rating!.save();
+      }
+
+      const populatedGame = await game!.populate("ratings");
+
+      return populatedGame;
+    },
+    addRatingToUser: async (_parent:never, {input}:any) => {
+      const user = await User.findById(input.userId);
+      const rating = await Rating.findById(input.ratingId);
+
+      if (!user!.ratings.includes(input.ratingId)) {
+        user!.ratings.push(input.ratingId);
+        await user!.save();
+      }
+
+      if (!rating!.users.includes(input.userId)) {
+        rating!.users.push(input.userId);
+        await rating!.save();
+      }
+
+      const populatedUser = await user!.populate("ratings");
+
+      return populatedUser;
     },
     deleteRating: async (_parent:never, { id }:Args) => {
       const result = await Rating.findByIdAndDelete(id);
@@ -38,16 +73,23 @@ export default {
       const result = await User.findByIdAndUpdate(id, input);
       return result;
     },
-    createUserOwnedGame: async (_parent:UserOwnedGameType, {input}:Args) => {
-      return await UserOwnedGame.create(input);
-    },
-    deleteUserOwnedGame: async (_parent:never, { id }:Args) => {
-      const result = await UserOwnedGame.findByIdAndDelete(id);
-      return result ? true : false;
-    },
-    updateUserOwnedGame: async (_parent:never, { id, input }:Args) => {
-      const result = await UserOwnedGame.findByIdAndUpdate(id, input);
-      return result;
+    addGameToUser: async (_parent:never, {input}:any) => {
+      const game = await Game.findById(input.gameId);
+      const user = await User.findById(input.userId);
+
+      if (!game.gameOwners.includes(input.userId)) {
+        game!.gameOwners.push(input.userId);
+        await game!.save();
+      }
+
+      if (!user!.gamesOwned.includes(input.gameId)) {
+        user!.gamesOwned.push(input.gameId);
+        await user!.save();
+      }
+
+      const populatedUser = await user!.populate("gamesOwned");
+
+      return populatedUser;
     },
 };
 
