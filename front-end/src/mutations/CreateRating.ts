@@ -6,14 +6,6 @@ const CREATE_RATING = gql`
             id
             rating
             comment
-            game {
-                id
-                title
-            }
-            user {
-                id
-                username
-            }
         }
     }
 `;

@@ -9,6 +9,7 @@ const CREATE_GAME = gql`
             price
             developer
             publisher
+            ratingAverage
         }
     }
 `;

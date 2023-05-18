@@ -1,14 +1,23 @@
 import {gql} from '@apollo/client';
 
 const GET_ALL_GAMES = gql`
-query GetAllGames {
-    games{
+query Games {
+  games {
+    id
+    developer
+    price
+    publisher
+    releaseDate
+    title
+    ratings {
       id
-      title
-      price
-      publisher
-      releaseDate
+      rating
+    }
+    gameOwners {
+      id
+      username
     }
   }
+}
 `;
 export default GET_ALL_GAMES;

@@ -1,11 +1,11 @@
 import {gql} from '@apollo/client';
 
-const GET_ALL_RATINGS = gql`
-query Ratings {
-    ratings {
+const GET_RATING_BY_ID = gql`
+query Rating($ratingId: ID) {
+    rating(id: $ratingId) {
       id
-      comment
       rating
+      comment
       games {
         id
         title
@@ -14,7 +14,7 @@ query Ratings {
         id
         username
       }
-    } 
+    }
   }
 `;
-export default GET_ALL_RATINGS;
+export default GET_RATING_BY_ID;
