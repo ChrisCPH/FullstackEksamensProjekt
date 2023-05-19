@@ -27,6 +27,7 @@ const GameTable = () => {
                     <th>Developer</th>
                     <th>Publisher</th>
                     <th>Release date</th>  
+                    <th>Actions</th>  
                 </tr>
                 </thead>
         {data.games.map((game : Game, index : number) => {
@@ -38,8 +39,10 @@ const GameTable = () => {
                     <td>{game.developer}</td>
                     <td>{game.publisher}</td>
                     <td>{game.releaseDate}</td>
-                    <td><ClaimGameButton gameId={game.id!} userId={currentUser!.id!} /></td>
-                    <td><RemoveGameButton gameId={game.id!} /></td>
+                    <td>
+                        <ClaimGameButton gameId={game.id!} userId={currentUser!.id!} />
+                        <RemoveGameButton gameId={game.id!} />
+                    </td>
                 </tr>
                 </tbody>    
             );
