@@ -27,17 +27,19 @@ function App() {
   },[])
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        {/* <GameTable games={games} setGames={setGames} />
-        <AddGameForm games={games} setGames={setGames} /> */}
-        <UserContextProvider>
-      <div>
-        <Login></Login>
+    <ApolloProvider client={client}>
+      <div className="container-fluid">
+        <div className="row">
+          {/* <GameTable games={games} setGames={setGames} />
+          <AddGameForm games={games} setGames={setGames} /> */}
+          <UserContextProvider>
+        <div>
+          <Login></Login>
+        </div>
+      </UserContextProvider>
+        </div>
       </div>
-    </UserContextProvider>
-      </div>
-    </div>
+    </ApolloProvider>
   )
 }
 

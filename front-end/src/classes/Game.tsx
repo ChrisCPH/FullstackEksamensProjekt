@@ -1,5 +1,5 @@
 class Game {
-    _id?:number
+    id?:string
     title:string
     releaseDate: string
     price: number
@@ -12,10 +12,6 @@ class Game {
         this.developer = developer;
         this.publisher = publisher;
         this.releaseDate = releaseDate;
-    }
-
-    setId(id: number) {
-        this._id = id;
     }
 }
 

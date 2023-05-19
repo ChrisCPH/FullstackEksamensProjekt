@@ -1,9 +1,17 @@
 import Game from '../classes/Game';
+import GET_ALL_GAMES from '../queries/GetAllGames';
 import RemoveGameButton from './RemoveGameButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useQuery, useMutation } from "@apollo/client";
 
+//const GameTable = ({games, setGames}:{games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
+const GameTable = () => {
+    const { loading, error, data, fetchMore } = useQuery(GET_ALL_GAMES); // fetchMore is designed for pagination. Second argument is optional variables.
 
-const GameTable = ({games, setGames}:{games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
+    
+    if (loading) return <>'Submitting...'</>;
+    if (error) return <>`Submission error! ${error.message}`</>;
+
     return (
         <div>
             <h1 className="text-center">Games</h1>
@@ -16,21 +24,19 @@ const GameTable = ({games, setGames}:{games:Game[], setGames:React.Dispatch<Reac
                     <th>Price</th>
                     <th>Developer</th>
                     <th>Publisher</th>
-                    <th>Release date</th>
-                    <th>Platform</th>       
+                    <th>Release date</th>  
                 </tr>
                 </thead>
-        {games.map((game) => {
+        {data.games.map((game : Game, index : number) => {
             return (
-                <tbody key={game._id}>
+                <tbody key={game.id}>
                 <tr>
-                    {/* <td>{game._id}</td> */}
                     <td>{game.title}</td>
                     <td>{game.price}€</td>
                     <td>{game.developer}</td>
                     <td>{game.publisher}</td>
                     <td>{game.releaseDate}</td>
-                    <td><RemoveGameButton gameId={game._id} games={games} setGames={setGames} /></td>
+                    <td><RemoveGameButton gameId={game.id!} /></td>
                 </tr>
                 </tbody>    
             );

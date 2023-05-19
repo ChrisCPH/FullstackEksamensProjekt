@@ -1,7 +1,10 @@
 import { useState } from "react"
 import Game from "../classes/Game"
-import MakeOptions from "./MakeOptions"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useQuery, useMutation } from "@apollo/client";
+import CREATE_GAME from "../mutations/CreateGame";
+import GET_ALL_GAMES from "../queries/GetAllGames";
+import UPDATE_GAME from "../mutations/UpdateGame";
 
 const AddGameForm = ({games, setGames}:{games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
 
@@ -14,14 +17,17 @@ const AddGameForm = ({games, setGames}:{games:Game[], setGames:React.Dispatch<Re
         })
     }
 
+    const [createGameMutation, { data, loading, error }] = useMutation(CREATE_GAME, { }); //mutateFunction is the function to call for server update. refetchQueries is the list of queries to refetch after the mutation is done. And if they were used with useQuery, they will be updated with the new data.
+   const [updateGameMutation, gameData] = useMutation(UPDATE_GAME,{
+       refetchQueries: [GET_ALL_GAMES]
+   }); 
+
     const handleClick = (event:React.MouseEvent<HTMLButtonElement>):void => {
         event.preventDefault();
-        const newGame = new Game(input.name, input.price, input.developer, input.publisher, input.release_date)
-        const options = MakeOptions("POST", newGame);
-        fetch('http://localhost:5000/api/games',options);
-        games.push(newGame);
+        const newGame =  { title: input.name, price: parseInt(input.price.toString()), developer: input.developer, publisher: input.publisher, releaseDate: input.release_date  }
+        games.push(newGame as Game);
         setGames([...games])
-        setInput({name:"Test", price: 0, developer:"", publisher:"", release_date:"12 January 2023"});
+        createGameMutation( {variables: { input: newGame } })
     }
 
     return (

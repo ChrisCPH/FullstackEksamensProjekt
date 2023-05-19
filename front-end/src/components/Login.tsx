@@ -2,7 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import User from "../classes/User"
 import makeOptions from "./MakeOptions";
-import { makeid } from "../classes/TextGenerator";
+import GameTable from "./GameTable";
+import Game from "../classes/Game";
+import { useQuery } from "@apollo/client";
+import GET_ALL_GAMES from "../queries/GetAllGames";
+import GameForm from "./GameForm";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -14,6 +18,10 @@ const Login: React.FC = () => {
     useEffect(() => {
         handleSession();
     })
+
+    const [game, setGame] = useState<Game>({ title: "", price: 0, developer: "", publisher: "", releaseDate: ""});
+    const { loading, error, data, fetchMore } = useQuery(GET_ALL_GAMES); // fetchMore is designed for pagination. Second argument is optional variables.
+
 
   const handleLogin = () => {
     //  login function that returns a user object with roles
@@ -63,24 +71,30 @@ const handleSession = () =>  {
   };
 
   function setToken(user : User) {
-    localStorage.setItem("loginToken", user.username + "|" + user.password + "|" + makeid(8));
+    localStorage.setItem("loginToken", user.username + "|" + user.password + "|");
   }
 
   return (
-    <div>
+    <div className="col-auto">
       {state.user ? (
         <div>
-          <p>Logged in as {state.user.username}</p>
-          <button onClick={handleLogout}>Logout</button>
+          <div className="col-6 offset-3 text-center">
+            <p>Logged in as <b>{state.user.username}</b></p>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+          {/* <GameTable games={games} setGames={setGames} /> */}
+          <GameTable />
+          <GameForm game={game} setGame={setGame} />
+          {/* <AddGameForm games={games} setGames={setGames} /> */}
         </div>
       ) : (
         <div>
-                {(
-                    <div className="alert alert-danger" role="alert">
-                        {message}
-                    </div>
-                )}
 
+      { message ?
+        <div className="alert alert-danger" role="alert">{message}</div>
+      : <div className="display: hidden;"></div>
+      }
+                    
                 <label>Username</label>
                 <input
                     type="text"
