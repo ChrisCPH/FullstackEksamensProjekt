@@ -1,27 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
-import { UserContext } from "../contexts/UserContext";
 import User from "../classes/User"
 import makeOptions from "./MakeOptions";
-import GameTable from "./GameTable";
-import Game from "../classes/Game";
-import { useQuery } from "@apollo/client";
-import GET_ALL_GAMES from "../queries/GetAllGames";
-import GameForm from "./GameForm";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { dispatch } = useContext(UserContext);
-  const { state } = useContext(UserContext);
   const [message, setMesage] = useState("")
+  const [user, setUser] = useState<User | null>();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        handleSession();
-    })
 
-    const [game, setGame] = useState<Game>({ title: "", price: 0, developer: "", publisher: "", releaseDate: ""});
-    const { loading, error, data, fetchMore } = useQuery(GET_ALL_GAMES); // fetchMore is designed for pagination. Second argument is optional variables.
-
+  useEffect(() => {
+      handleSession();
+  })
 
   const handleLogin = () => {
     //  login function that returns a user object with roles
@@ -37,9 +29,11 @@ const Login: React.FC = () => {
         // If the submition is okay
         if(data.status != "error") {
             const foundUser = data.user as User;
-            dispatch({ type: "login", payload: foundUser });
             setMesage("");
+            setUser(foundUser);
             setToken(foundUser);
+
+            navigate("/games");
         }
 
         if(data.user == null)
@@ -51,15 +45,12 @@ const handleSession = () =>  {
     const session = localStorage.getItem("loginToken");
 
     if(session != null) {
-        const split = session!.split('|');
+        const currentUser = JSON.parse(session) as User;
+        if(currentUser != null) {
+          setUsername(currentUser.username);
+          setPassword(currentUser.password);
 
-        // Username and password
-        if(split[0] != "" && split[1] != "")
-        {
-            setUsername(split[0]);
-            setPassword(split[1]);
-
-            // TODO: Clean up & add middleware to make things easier in between components and stuff.
+          if(!user) handleLogin();
         }
     }
 
@@ -67,25 +58,21 @@ const handleSession = () =>  {
 
   const handleLogout = () => {
     localStorage.removeItem("loginToken");
-    dispatch({ type: "logout" });
+    setUser(null);
   };
 
   function setToken(user : User) {
-    localStorage.setItem("loginToken", user.username + "|" + user.password + "|");
+    localStorage.setItem("loginToken", JSON.stringify(user));
   }
 
   return (
     <div className="col-auto">
-      {state.user ? (
+      {user ? (
         <div>
           <div className="col-6 offset-3 text-center">
-            <p>Logged in as <b>{state.user.username}</b></p>
+            <p>Logged in as <b>{user!.username}</b></p>
             <button onClick={handleLogout}>Logout</button>
           </div>
-          {/* <GameTable games={games} setGames={setGames} /> */}
-          <GameTable />
-          <GameForm game={game} setGame={setGame} />
-          {/* <AddGameForm games={games} setGames={setGames} /> */}
         </div>
       ) : (
         <div>
@@ -111,7 +98,7 @@ const handleSession = () =>  {
                     onChange={(e) => setPassword(e.target.value)}
                     onKeyDown={e => e.key == 'Enter' ? handleLogin() : null}
                 />
-                <button onClick={handleLogin}>Login</button>
+                <button onClick={handleLogin}>Log In</button>
         </div>
       )}
     </div>

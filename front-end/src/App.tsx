@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import './css/App.css'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import Game from './classes/Game';
-import AddGameForm from './components/AddGameForm';
 import GameTable from './components/GameTable'
-import UserContextProvider from './contexts/UserContext';
 import Login from './components/Login';
+import { BrowserRouter, Link, Route, Routes, } from "react-router-dom";
 
 function App() {
   
@@ -27,19 +26,38 @@ function App() {
   },[])
 
   return (
-    <ApolloProvider client={client}>
-      <div className="container-fluid">
-        <div className="row">
-          {/* <GameTable games={games} setGames={setGames} />
-          <AddGameForm games={games} setGames={setGames} /> */}
-          <UserContextProvider>
-        <div>
-          <Login></Login>
-        </div>
-      </UserContextProvider>
-        </div>
+        <div className="container-fluid">
+          <div className="row">
+            <ApolloProvider client={client}>
+            <BrowserRouter>
+              {/* <nav>
+                <div>
+                  <Link to="/">Home</Link>
+                </div>
+                <div>
+                  <Link to="/user/:id">User</Link>
+                </div>
+              </nav> */}
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/games" element={<GameTable />} />
+              </Routes>
+            </BrowserRouter>
+              {/* <div className="container-fluid">
+                <div className="row">
+                  {/* <GameTable games={games} setGames={setGames} />
+                  <AddGameForm games={games} setGames={setGames} /> */}
+                  {/* <UserContextProvider>
+                <div>
+                  <Login></Login>
+                </div>
+              </UserContextProvider>
+                </div> */}
+              {/* </div>  */}
+            </ApolloProvider>
       </div>
-    </ApolloProvider>
+    </div>
+
   )
 }
 

@@ -9,7 +9,7 @@ const RemoveGameButton = ({gameId}: {gameId: string}) => {
         refetchQueries: [GET_ALL_GAMES]
     }); 
     
-    return <button onClick={()=> {
+    return <button className="btn btn-danger" onClick={()=> {
         deleteGameMutation( {variables: { id: gameId } });
     }}>Delete Game</button>
 }

@@ -1,5 +1,5 @@
 class User {
-    id?:number
+    id?: string
     username:string
     password:string
     type:string

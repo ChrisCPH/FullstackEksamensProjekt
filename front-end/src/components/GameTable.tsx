@@ -3,14 +3,16 @@ import GET_ALL_GAMES from '../queries/GetAllGames';
 import RemoveGameButton from './RemoveGameButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useQuery, useMutation } from "@apollo/client";
+import ClaimGameButton from './ClaimGameButton';
+import User from '../classes/User';
 
 //const GameTable = ({games, setGames}:{games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
 const GameTable = () => {
     const { loading, error, data, fetchMore } = useQuery(GET_ALL_GAMES); // fetchMore is designed for pagination. Second argument is optional variables.
+    const currentUser = JSON.parse(localStorage.getItem("loginToken")!) as User;
 
-    
-    if (loading) return <>'Submitting...'</>;
-    if (error) return <>`Submission error! ${error.message}`</>;
+    if (loading) return <>'Loading Game List...'</>;
+    if (error) return <>`Game List Error! ${error.message}`</>;
 
     return (
         <div>
@@ -36,6 +38,7 @@ const GameTable = () => {
                     <td>{game.developer}</td>
                     <td>{game.publisher}</td>
                     <td>{game.releaseDate}</td>
+                    <td><ClaimGameButton gameId={game.id!} userId={currentUser!.id!} /></td>
                     <td><RemoveGameButton gameId={game.id!} /></td>
                 </tr>
                 </tbody>    
