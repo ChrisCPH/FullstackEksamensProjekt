@@ -17,7 +17,7 @@ const Login: React.FC = () => {
 
   const handleLogin = () => {
     //  login function that returns a user object with roles
-    const user: User = { username, password, type: "admin" }; 
+    const user: User = { username, password}; 
 
     if(username == "" || password == "")
         setMesage("No username or password specified!")

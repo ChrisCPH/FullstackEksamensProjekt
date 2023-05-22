@@ -5,6 +5,8 @@ import Game from './classes/Game';
 import GameTable from './components/GameTable'
 import Login from './components/Login';
 import { BrowserRouter, Link, Route, Routes, } from "react-router-dom";
+import RatingTable from './components/RatingTable';
+import Header from './components/Header';
 
 function App() {
   
@@ -26,10 +28,12 @@ function App() {
   },[])
 
   return (
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <Header />
         <div className="container-fluid">
           <div className="row">
-            <ApolloProvider client={client}>
-            <BrowserRouter>
+            
               {/* <nav>
                 <div>
                   <Link to="/">Home</Link>
@@ -41,8 +45,8 @@ function App() {
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/games" element={<GameTable />} />
+                <Route path="/ratings" element={<RatingTable />} />
               </Routes>
-            </BrowserRouter>
               {/* <div className="container-fluid">
                 <div className="row">
                   {/* <GameTable games={games} setGames={setGames} />
@@ -54,10 +58,10 @@ function App() {
               </UserContextProvider>
                 </div> */}
               {/* </div>  */}
-            </ApolloProvider>
+        </div>
       </div>
-    </div>
-
+    </BrowserRouter>
+  </ApolloProvider>
   )
 }
 
