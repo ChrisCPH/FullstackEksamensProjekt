@@ -48,7 +48,7 @@ const GameTable = () => {
 
     return (
         <div>
-            <GameForm existingGame={_game} newGame={_game} setGame={setGame} />
+            <GameForm existingGame={_game} setGame={setGame} />
             <h1 className="text-center">Games</h1>
             <table className="table">
                 <thead>
@@ -77,7 +77,7 @@ const GameTable = () => {
                     <td><RatingAverageArray gameIndex={index} /></td>
                     <td>
                         <ClaimGameButton gameId={game!.id!} userId={currentUser!.id!} />
-                        <EditGameButton existingGame={game!} newGame={_game!} setGame={setGame} />
+                        <EditGameButton existingGame={game!} setGame={setGame} />
                         <RemoveGameButton gameId={game.id!} />
                     </td>
                     <td><RatingArray gameIndex={index} /></td>
