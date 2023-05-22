@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 //const GameTable = ({games, setGames}:{games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
 const GameTable = () => {
-    const [game, setGame] = useState<Game>({ title: "", price: 0, developer: "", publisher: "", releaseDate: "", ratingAverage: 0 })
+    const [_game, setGame] = useState<Game>({ title: "", price: 0, developer: "", publisher: "", releaseDate: "", ratingAverage: 0 })
     const { loading, error, data, fetchMore } = useQuery(GET_ALL_GAMES); // fetchMore is designed for pagination. Second argument is optional variables.
     const currentUser = JSON.parse(localStorage.getItem("loginToken")!) as User;
 
@@ -40,6 +40,7 @@ const GameTable = () => {
                 sum += rating.rating
             )
         let avg = sum/len;
+        if(Number.isNaN(avg)) avg = 0;
         return(
             <p>{avg.toFixed(2)}/5</p>
         )
@@ -47,7 +48,7 @@ const GameTable = () => {
 
     return (
         <div>
-            <GameForm game={game} setGame={setGame} />
+            <GameForm existingGame={_game} newGame={_game} setGame={setGame} />
             <h1 className="text-center">Games</h1>
             <table className="table">
                 <thead>
@@ -76,7 +77,7 @@ const GameTable = () => {
                     <td><RatingAverageArray gameIndex={index} /></td>
                     <td>
                         <ClaimGameButton gameId={game!.id!} userId={currentUser!.id!} />
-                        <EditGameButton game={game!} setGame={setGame} />
+                        <EditGameButton existingGame={game!} newGame={_game!} setGame={setGame} />
                         <RemoveGameButton gameId={game.id!} />
                     </td>
                     <td><RatingArray gameIndex={index} /></td>
