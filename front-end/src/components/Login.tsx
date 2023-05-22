@@ -29,6 +29,7 @@ const Login: React.FC = () => {
         // If the submition is okay
         if(data.status != "error") {
             const foundUser = data.user as User;
+            foundUser.id = data.user._id;
             setMesage("");
             setUser(foundUser);
             setToken(foundUser);
@@ -53,8 +54,7 @@ const handleSession = () =>  {
           if(!user) handleLogin();
         }
     }
-
-  }
+}
 
   const handleLogout = () => {
     localStorage.removeItem("loginToken");

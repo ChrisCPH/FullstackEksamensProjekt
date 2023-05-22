@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Game from "../classes/Game"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useMutation } from "@apollo/client";
@@ -9,10 +9,31 @@ import UPDATE_GAME from "../mutations/UpdateGame";
 const GameForm = ({game, setGame} : {game : Game, setGame:(game: Game) => void}) => {
 
     const [errorMsg, setError] = useState('');
+    const [_game, _setGame] = useState<Game>({ title: "", price: 0, developer: "", publisher: "", releaseDate: "", ratingAverage: 0 })
     const [createGameMutation, { data, loading, error }] = useMutation(CREATE_GAME, { refetchQueries: [GET_ALL_GAMES] }); //mutateFunction is the function to call for server update. refetchQueries is the list of queries to refetch after the mutation is done. And if they were used with useQuery, they will be updated with the new data.
     const [updateGameMutation, gameData] = useMutation(UPDATE_GAME,{
-       refetchQueries: [GET_ALL_GAMES]
-   });
+        // refetchQueries: [GET_ALL_PEOPLE] // Updates page by refetching data from server.
+
+        // Update cache without refetching by using the update function
+        update: (cache, { data: { updatePerson: updateGame } }) => {
+            console.log('updatePerson: ',updateGame); // updatePerson is the response from the server. Must be the right name here of the data.
+
+            const readQ  = cache.readQuery({ query: GET_ALL_GAMES });
+            const games = (readQ as {games: Game[]}).games;
+            const listIndexOfChangedGame = games.findIndex((game) => game.id === updateGame.id);
+
+            cache.writeQuery({
+                query: GET_ALL_GAMES,
+                data: {
+                    persons: [
+                        ...games.slice(0, listIndexOfChangedGame),
+                        updateGame,
+                        ...games.slice(listIndexOfChangedGame + 1)
+                    ]
+                },
+            });
+        }
+    });
 
    const createGame = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -21,31 +42,32 @@ const GameForm = ({game, setGame} : {game : Game, setGame:(game: Game) => void})
         return;
     }
 
+    console.log(game)
     createGameMutation({ variables: {input: game}} );
     }
 
-    const editPerson = (event: React.FormEvent<HTMLFormElement>) => {
+    const editGame = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if(!game.title) {
             setError('Please fill in all fields');
             return;
         }
-        updateGameMutation({ variables: {input: game, id: game.id} });
+
+        updateGameMutation({ variables: {id: game.id, input: game } });
         setError('');
     }
 
-    if (loading || gameData.loading) return <>'Submitting...'</>;
-    if (error || gameData.error) return <>`Submission error! ${error?error.message:gameData.error}`</>;
-
+    if (loading || gameData.loading) return <>'Creating game...'</>;
+    //if (error || gameData.error) return <>`Create game error! ${error?error.message:gameData.error}`</>;
 
     return (
         <div>
             <h2 className="text-red-400">{errorMsg}</h2>
-            <form onSubmit={game.id?editPerson:createGame}>
+            <form onSubmit={_game.id?editGame:createGame}>
                 <h3>Add/Edit Game</h3>
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
-                    <input className="form-control" type="text" id="title" placeholder="Name" onChange={(evt) => setGame({ ...game, title: evt.target.value })} name="title" />
+                    <input className="form-control" type="text" id="title" placeholder="Name" onChange={(evt) => { setGame({ ...game, title: evt.target.value }); alert(game.title )}} name="title" />
                 </div>
 
                 <div className="form-group">

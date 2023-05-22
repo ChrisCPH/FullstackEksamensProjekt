@@ -1,31 +1,17 @@
-import { useState, useEffect } from 'react'
 import './css/App.css'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import Game from './classes/Game';
 import GameTable from './components/GameTable'
 import Login from './components/Login';
 import { BrowserRouter, Link, Route, Routes, } from "react-router-dom";
 import RatingTable from './components/RatingTable';
 import Header from './components/Header';
 
+
 function App() {
-  
-  const [games, setGames] = useState<Game[]>([]);
-
-  const fetchGames = () => {
-      return fetch('http://localhost:5000/api/games')
-          .then(((res) => res.json()))
-          .then((data) => setGames(JSON.parse(JSON.stringify(data.games))))
-  }
-
   const client = new ApolloClient({
     uri: 'http://localhost:4000/graphql',
     cache: new InMemoryCache(),
   });
-
-  useEffect(() => {
-      fetchGames();
-  },[])
 
   return (
     <ApolloProvider client={client}>

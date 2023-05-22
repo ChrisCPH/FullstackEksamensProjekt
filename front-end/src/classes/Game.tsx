@@ -8,9 +8,9 @@ class Game {
     developer: string
     publisher: string
     ratingAverage: number
-    ratings: Rating
+    ratings?: Rating
 
-    constructor(name:string, price:number, developer:string, publisher:string, releaseDate:string, ratingAverage: number, ratings: Rating) {
+    constructor(name:string, price:number, developer:string, publisher:string, releaseDate:string, ratingAverage: number, ratings?: Rating) {
         this.title = name;
         this.price = price;
         this.developer = developer;
