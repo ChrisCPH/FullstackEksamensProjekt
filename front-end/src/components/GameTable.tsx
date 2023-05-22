@@ -33,6 +33,18 @@ const GameTable = () => {
         )
     }
 
+    const RatingAverageArray = ({gameIndex}: ArrayProps) => {
+        let sum = 0;
+        let len = data.games[gameIndex].ratings.length
+        data.games[gameIndex].ratings.map((rating:Rating) =>
+                sum += rating.rating
+            )
+        let avg = sum/len;
+        return(
+            <p>{avg.toFixed(2)}/5</p>
+        )
+    }
+
     return (
         <div>
             <GameForm game={game} setGame={setGame} />
@@ -46,6 +58,7 @@ const GameTable = () => {
                     <th>Developer</th>
                     <th>Publisher</th>
                     <th>Release date</th>
+                    <th>Rating Average</th>
                     <th>Actions</th>
                     <th>Ratings</th>
                 </tr>
@@ -60,12 +73,14 @@ const GameTable = () => {
                     <td>{game.developer}</td>
                     <td>{game.publisher}</td>
                     <td>{game.releaseDate}</td>
+                    <td><RatingAverageArray gameIndex={index} /></td>
                     <td>
-                        <ClaimGameButton gameId={game!.id} userId={currentUser!.id} />
+                        <ClaimGameButton gameId={game!.id!} userId={currentUser!.id!} />
                         <EditGameButton game={game!} setGame={setGame} />
                         <RemoveGameButton gameId={game.id!} />
                     </td>
                     <td><RatingArray gameIndex={index} /></td>
+                    
                 </tr>           
             );
         })}
