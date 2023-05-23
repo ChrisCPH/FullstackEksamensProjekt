@@ -11,4 +11,9 @@ cd to ``front-end`` and ``back-end`` and run the following command:
 ```npm run dev```
 
 ## Back-end
+Create config.env file with the following info
+PORT=
+DATABASE_DEV=
+DATABASE_PASSWORD=
+
 ```npx run start:nodemon```
