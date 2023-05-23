@@ -1,6 +1,11 @@
 # Fullstack Backend Start-code
+Create config.env file with the following info
+- ```PORT=```
+- ```DATABASE_DEV=```
+- ```DATABASE_PASSWORD=```
 
-- ```npm run start:nodemon```
+To start server:
+```npm run start:nodemon```
 
 ## Technologies used
 
