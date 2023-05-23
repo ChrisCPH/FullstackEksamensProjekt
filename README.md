@@ -8,7 +8,7 @@ cd to ``front-end`` and ``back-end`` and run the following command:
 # Starting The Servers
 
 ## Front-end
-```run dev```
+```npm run dev```
 
-## Server
-```npx ts-node ./src/server.ts```
+## Back-end
+```npx run start:nodemon```
