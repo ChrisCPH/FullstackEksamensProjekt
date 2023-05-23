@@ -2,9 +2,10 @@ import './css/App.css'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import GameTable from './components/GameTable'
 import Login from './components/Login';
+import SignUp from './components/SignUp';
 import { BrowserRouter, Link, Route, Routes, } from "react-router-dom";
 import RatingTable from './components/RatingTable';
-import Header from './components/Header';
+import UserTable from './components/UserTable';
 
 
 function App() {
@@ -16,34 +17,15 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <Header />
         <div className="container-fluid">
           <div className="row">
-            
-              {/* <nav>
-                <div>
-                  <Link to="/">Home</Link>
-                </div>
-                <div>
-                  <Link to="/user/:id">User</Link>
-                </div>
-              </nav> */}
               <Routes>
-                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
                 <Route path="/games" element={<GameTable />} />
                 <Route path="/ratings" element={<RatingTable />} />
+                <Route path="/users" element={<UserTable />} />
               </Routes>
-              {/* <div className="container-fluid">
-                <div className="row">
-                  {/* <GameTable games={games} setGames={setGames} />
-                  <AddGameForm games={games} setGames={setGames} /> */}
-                  {/* <UserContextProvider>
-                <div>
-                  <Login></Login>
-                </div>
-              </UserContextProvider>
-                </div> */}
-              {/* </div>  */}
         </div>
       </div>
     </BrowserRouter>

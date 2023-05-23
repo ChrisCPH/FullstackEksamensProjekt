@@ -7,7 +7,7 @@ const Header = () => {
         <nav className="topnav">
             <NavLink to="/games"> Games </NavLink>
             <NavLink to="/ratings"> Ratings </NavLink>
-            
+            <NavLink to="/users"> Profile </NavLink>
         </nav>
     )
 }

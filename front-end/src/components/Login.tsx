@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import User from "../classes/User"
 import makeOptions from "./MakeOptions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -81,24 +82,39 @@ const handleSession = () =>  {
         <div className="alert alert-danger" role="alert">{message}</div>
       : <div className="display: hidden;"></div>
       }
-                    
+              <div>
                 <label>Username</label>
+              </div>
+              <div className="form-group">
                 <input
+                    className="form-control"
                     type="text"
                     placeholder="Username"  
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     onKeyDown={e => e.key == 'Enter' ? handleLogin() : null}
                 />
+              </div>
+              <div className="form-group">
                 <label>Password</label>
                 <input
+                    className="form-control"
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     onKeyDown={e => e.key == 'Enter' ? handleLogin() : null}
-                />
-                <button onClick={handleLogin}>Log In</button>
+                /></div>
+                <div>
+                <button className="btn btn-primary" onClick={handleLogin}>Log In</button>
+              </div>
+              <br></br>
+              <p>Dont have an acccount yet?</p>
+              <div>
+                <nav className="btn btn-outline-primary">
+                  <NavLink to="/signup">Sign up</NavLink>
+                </nav>
+              </div>
         </div>
       )}
     </div>

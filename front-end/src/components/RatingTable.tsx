@@ -10,6 +10,7 @@ import RatingForm from './RatingForm';
 import AddRatingToUserButton from './AddRatingToUserButton';
 import { useState } from 'react';
 import AddRatingToGameButton from './AddRatingToGame';
+import Header from './Header';
 
 const RatingTable = () => {
     const [_rating, setRating] = useState<Rating>({ rating: 0, comment: "" })
@@ -45,6 +46,7 @@ const RatingTable = () => {
 
     return (
         <div>
+            <Header />
             <RatingForm existingRating={_rating} setRating={setRating} />
             <h1 className="text-center">Ratings</h1>
             <table className="table">

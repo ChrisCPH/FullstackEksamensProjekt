@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import Rating from "../classes/Rating";
-import Game from "../classes/Game";
-import User from "../classes/User";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useMutation } from "@apollo/client";
 import CREATE_RATING from "../mutations/CreateRating";
@@ -55,7 +53,7 @@ const RatingForm = ({existingRating, setRating} : {existingRating : Rating, setR
         <div>
             <h2 className="text-red-400">{errorMsg}</h2>
             <form onSubmit={existingRating.id?editRating:createRating}>
-                <h3>Add/Edit Rating</h3>
+                <h3>Rating</h3>
                 <div className="form-group">
                     <label htmlFor="rating">Rating</label>
                     <input className="form-control" type="number" id="rating" placeholder="Rating" onChange={(evt) => _setRating({ ..._rating, rating: parseInt(evt.target.value) })}  value={_rating.rating} name="rating" />

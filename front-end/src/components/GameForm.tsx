@@ -13,38 +13,16 @@ const GameForm = ({existingGame, setGame} : {existingGame : Game, setGame:(game:
     const [errorMsg, setError] = useState('');
     const [createGameMutation, { data, loading, error }] = useMutation(CREATE_GAME, { refetchQueries: [GET_ALL_GAMES] }); //mutateFunction is the function to call for server update. refetchQueries is the list of queries to refetch after the mutation is done. And if they were used with useQuery, they will be updated with the new data.
     const [updateGameMutation, gameData] = useMutation(UPDATE_GAME,{
-        refetchQueries: [GET_ALL_GAMES] // Updates page by refetching data from server.
-
-        // Update cache without refetching by using the update function
-        // update: (cache, { data: { updatePerson: updateGame } }) => {
-        //     console.log('updatePerson: ',updateGame); // updatePerson is the response from the server. Must be the right name here of the data.
-
-        //     const readQ  = cache.readQuery({ query: GET_ALL_GAMES });
-        //     const games = (readQ as {games: Game[]}).games;
-        //     const listIndexOfChangedGame = games.findIndex((game) => game.id === updateGame.id);
-
-        //     cache.writeQuery({
-        //         query: GET_ALL_GAMES,
-        //         data: {
-        //             persons: [
-        //                 ...games.slice(0, listIndexOfChangedGame),
-        //                 updateGame,
-        //                 ...games.slice(listIndexOfChangedGame + 1)
-        //             ]
-        //         },
-        //     });
-        //}
+        refetchQueries: [GET_ALL_GAMES]
     });
 
-   const createGame = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if(!_game.title){
-        setError('Please fill in all fields.'); 
-        return;
-    }
-
-    //createGameMutation({ variables: {input: _game}} );
-    createGameMutation({ variables: {input: { title: _game.title, price: _game.price, developer: _game.developer, publisher: _game.publisher, releaseDate: _game.releaseDate } }} );
+    const createGame = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if(!_game.title){
+            setError('Please fill in all fields.'); 
+            return;
+        }
+        createGameMutation({ variables: {input: { title: _game.title, price: _game.price, developer: _game.developer, publisher: _game.publisher, releaseDate: _game.releaseDate } }} );
     }
 
     useEffect(() => {
@@ -80,7 +58,7 @@ const GameForm = ({existingGame, setGame} : {existingGame : Game, setGame:(game:
         <div>
             <h2 className="text-red-400">{errorMsg}</h2>
             <form onSubmit={existingGame.id?editGame:createGame}>
-                <h3>Add/Edit Game</h3>
+                <h3>Game</h3>
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
                     <input className="form-control" type="text" id="title" placeholder="Title" onChange={(evt) => { _setGame({ ..._game, title: evt.target.value })}} value={_game.title} name="title" />

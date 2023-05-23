@@ -9,6 +9,7 @@ import Rating from '../classes/Rating';
 import EditGameButton from './EditGameButton';
 import GameForm from './GameForm';
 import { useState } from 'react';
+import Header from './Header';
 
 //const GameTable = ({games, setGames}:{games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
 const GameTable = () => {
@@ -48,6 +49,7 @@ const GameTable = () => {
 
     return (
         <div>
+            <Header />
             <GameForm existingGame={_game} setGame={setGame} />
             <h1 className="text-center">Games</h1>
             <table className="table">

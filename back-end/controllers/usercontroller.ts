@@ -85,7 +85,7 @@ export const createUser = async(req : express.Request, res: express.Response) =>
 
 export const deleteUser = async (req : express.Request, res : express.Response) => {
     try {
-        await User.findByIdAndDelete(mongoose.Types.ObjectId.createFromHexString(req.params.id));
+        await User.findByIdAndDelete(req.params.id);
         res.status(204).json();
     } catch (e) {
         res.status(204).json;
@@ -94,7 +94,7 @@ export const deleteUser = async (req : express.Request, res : express.Response) 
 
 export const updateUser = async (req : express.Request, res : express.Response) => {
     try {
-        const updatedUser = await User.findByIdAndUpdate((mongoose.Types.ObjectId.createFromHexString(req.params.id)), req.body, { new: true, runValidators: true })
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
         res.status(200)
             .json({
                 data: updatedUser
