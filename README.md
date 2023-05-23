@@ -12,8 +12,9 @@ cd to ``front-end`` and ``back-end`` and run the following command:
 
 ## Back-end
 Create config.env file with the following info
-PORT=
-DATABASE_DEV=
-DATABASE_PASSWORD=
+- ```PORT=```
+- ```DATABASE_DEV=```
+- ```DATABASE_PASSWORD=```
 
-```npx run start:nodemon```
+To start server:
+```npm run start:nodemon```
