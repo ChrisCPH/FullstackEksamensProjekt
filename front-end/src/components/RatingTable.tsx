@@ -5,8 +5,14 @@ import User from '../classes/User';
 import Game from '../classes/Game';
 import GET_ALL_RATINGS from '../queries/GetAllRatings';
 import RemoveRatingButton from './RemoveRatingButton';
+import EditRatingButton from './EditRatingButton';
+import RatingForm from './RatingForm';
+import AddRatingToUserButton from './AddRatingToUserButton';
+import { useState } from 'react';
+import AddRatingToGameButton from './AddRatingToGame';
 
 const RatingTable = () => {
+    const [_rating, setRating] = useState<Rating>({ rating: 0, comment: "" })
     const { loading, error, data, fetchMore } = useQuery(GET_ALL_RATINGS);
     const currentUser = JSON.parse(localStorage.getItem("loginToken")!) as User;
 
@@ -39,8 +45,8 @@ const RatingTable = () => {
 
     return (
         <div>
+            <RatingForm existingRating={_rating} setRating={setRating} />
             <h1 className="text-center">Ratings</h1>
-            
             <table className="table">
                 <thead>
                 <tr>
@@ -59,6 +65,9 @@ const RatingTable = () => {
                     <td><GameArray ratingIndex={index} /></td>
                     <td><UserArray ratingIndex={index} /></td>
                     <td>
+                        <AddRatingToGameButton ratingId={rating.id!} />
+                        <AddRatingToUserButton ratingId={rating.id!} userId={currentUser!.id!} />
+                        <EditRatingButton existingRating={rating!} setRating={setRating} />
                         <RemoveRatingButton ratingId={rating.id!} />
                     </td>
                 </tr>

@@ -5,8 +5,8 @@ class Rating {
     id?:string;
     rating: number;
     comment: string;
-    games: Game;
-    users: User;
+    games?: Game;
+    users?: User;
 
     constructor(rating: number, comment: string, games: Game, users: User) {
         this.rating = rating;
