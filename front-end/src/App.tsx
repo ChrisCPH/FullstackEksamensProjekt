@@ -1,30 +1,35 @@
-import { useState, useEffect } from 'react'
 import './css/App.css'
-import Games from './classes/Games';
-import AddGameForm from './components/AddGameForm';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import GameTable from './components/GameTable'
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import { BrowserRouter, Link, Route, Routes, } from "react-router-dom";
+import RatingTable from './components/RatingTable';
+import UserTable from './components/UserTable';
+
 
 function App() {
-  
-  const [games, setGames] = useState<Games[]>([]);
-
-  const fetchGames = () => {
-      return fetch('http://localhost:3001/game')
-          .then(((res) => res.json()))
-          .then((data) => setGames(data))
-  }
-
-  useEffect(() => {
-      fetchGames();
-  },[])
+  const client = new ApolloClient({
+    uri: 'http://localhost:4000/graphql',
+    cache: new InMemoryCache(),
+  });
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <GameTable games={games} setGames={setGames} />
-        <AddGameForm games={games} setGames={setGames} />
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <div className="container-fluid">
+          <div className="row">
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/games" element={<GameTable />} />
+                <Route path="/ratings" element={<RatingTable />} />
+                <Route path="/users" element={<UserTable />} />
+              </Routes>
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
+  </ApolloProvider>
   )
 }
 

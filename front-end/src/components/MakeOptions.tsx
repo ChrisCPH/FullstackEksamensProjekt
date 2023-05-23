@@ -1,6 +1,4 @@
-import Game from "../classes/Games";
-
-const makeOptions = (method:string, body?:Game) => {
+const makeOptions = (method:string, body?:any) => {
     var opts = {
         method: method,
         headers: {

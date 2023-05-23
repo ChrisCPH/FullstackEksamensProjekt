@@ -6,14 +6,14 @@ const RatingSchema = new mongoose.Schema({
       required: true
     },
     comment: String,
-    Game: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Game'
+    games: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Game",
     },
-    User: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    users: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+    },
   });
 
 const Rating = mongoose.model('Rating', RatingSchema, 'Ratings');

@@ -1,12 +1,16 @@
-import Game from "../classes/Games";
-import MakeOptions from "./MakeOptions";
+import { useMutation } from "@apollo/client";
+import DELETE_GAME from "../mutations/DeleteGame";
+import GET_ALL_GAMES from "../queries/GetAllGames";
 
-const RemoveGameButton = ({gameId, games, setGames}:{gameId: number, games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
-    return <button onClick={()=> {
-        const options = MakeOptions("DELETE");
-        fetch('http://localhost:3001/game/' + gameId, options)
-        games.splice(gameId - 1, 1);
-        setGames([...games]); 
+//const RemoveGameButton = ({gameId, games, setGames}:{gameId: number, games:Game[], setGames:React.Dispatch<React.SetStateAction<Game[]>>}) => {
+const RemoveGameButton = ({gameId}: {gameId: string}) => {
+
+    const [deleteGameMutation, gameData] = useMutation(DELETE_GAME,{
+        refetchQueries: [GET_ALL_GAMES]
+    }); 
+    
+    return <button className="btn btn-danger" onClick={()=> {
+        deleteGameMutation( {variables: { id: gameId } });
     }}>Delete Game</button>
 }
 
