@@ -1,6 +1,6 @@
 # Fullstack Backend Start-code
 
-- npm run start:nodemon
+- ```npm run start:nodemon```
 
 ## Technologies used
 
@@ -13,4 +13,3 @@
 - dotenv
 - morgan
 - nodemon
-
