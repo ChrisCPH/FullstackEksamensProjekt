@@ -61,9 +61,9 @@ const GameTable = () => {
                     <th>Developer</th>
                     <th>Publisher</th>
                     <th>Release date</th>
+                    <th>Ratings</th>
                     <th>Rating Average</th>
                     <th>Actions</th>
-                    <th>Ratings</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,13 +76,13 @@ const GameTable = () => {
                     <td>{game.developer}</td>
                     <td>{game.publisher}</td>
                     <td>{game.releaseDate}</td>
+                    <td><RatingArray gameIndex={index} /></td>
                     <td><RatingAverageArray gameIndex={index} /></td>
                     <td>
                         <ClaimGameButton gameId={game!.id!} userId={currentUser!.id!} />
                         <EditGameButton existingGame={game!} setGame={setGame} />
                         <RemoveGameButton gameId={game.id!} />
                     </td>
-                    <td><RatingArray gameIndex={index} /></td>
                     
                 </tr>           
             );
