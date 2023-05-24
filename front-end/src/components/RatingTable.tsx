@@ -56,6 +56,7 @@ const RatingTable = () => {
                     <th>Comment</th>
                     <th>Game</th>
                     <th>User</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
         {data.ratings.map((rating : Rating, index : number) => {

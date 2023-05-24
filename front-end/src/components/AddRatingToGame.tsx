@@ -12,6 +12,7 @@ const AddRatingToGameButton = ({ratingId}: {ratingId: string }) => {
     const { loading, error, data: foundRating, fetchMore } =  useQuery(GET_RATING_BY_ID, { variables: { ratingId }}); 
 
     const [gameId, setGameId] = useState("");
+    const [firstPassed, setFirstPassed] = useState(false);
     const [isClaimed, setClaim] = useState(false)
     const [addRatingToGameMutation, ratingData] = useMutation(ADD_RATING_TO_GAME,{
         refetchQueries: [GET_ALL_RATINGS]
@@ -48,8 +49,14 @@ const AddRatingToGameButton = ({ratingId}: {ratingId: string }) => {
         ) : (
             <div>
                 <select value={gameId} onChange={handleChange}>
-                    {gameQuery.data?.games?.map((game: Game) => 
-                    <option key={game.id} value={game.id}>{game.title}</option>)}
+                    {gameQuery.data?.games?.map((game: Game) => <option key={game.id} value={game.id}>{game.title}</option>)}
+                        
+                    {gameQuery.data?.games?.map((game: Game) => {
+                        if(!firstPassed) {
+                            setGameId(game!.id!)
+                            setFirstPassed(true);
+                        }
+                    })}
                 </select>
                 <button className="btn btn-primary" onClick={()=> {
                 if(ratingId != null) {

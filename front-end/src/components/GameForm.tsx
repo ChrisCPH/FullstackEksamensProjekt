@@ -58,9 +58,9 @@ const GameForm = ({existingGame, setGame} : {existingGame : Game, setGame:(game:
         <div>
             <h2 className="text-red-400">{errorMsg}</h2>
             <form onSubmit={existingGame.id?editGame:createGame}>
-                <h3>Game</h3>
+                <h3> {existingGame.id? "Edit Game" : "Add Game" }</h3>
                 <div className="form-group">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Title</label>
                     <input className="form-control" type="text" id="title" placeholder="Title" onChange={(evt) => { _setGame({ ..._game, title: evt.target.value })}} value={_game.title} name="title" />
                 </div>
 
